@@ -8,8 +8,37 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.floatlayout import FloatLayout
 
+import enum
+from typing import List
+
+from dataclasses import dataclass
+
 roles = ["kansalainen", "kurtesaani", "orja", "aatelinen", "hallitsija"]
 
+
+class Role(str, enum.Enum):
+    KANSALAINEN = "kansalainen"
+    KURTESAANI = "kurtesaani"
+    ORJA = "orja"
+    AATELINEN = "aatelinen"
+    HALLITSIJA = "hallitsija"
+
+@dataclass
+class Player:
+    role: Role
+    name: str
+
+
+class ValtakuntaApp(App):
+    players: List[Player]
+    def __init__(self):
+        super().__init__()
+        self.players = []
+
+    def build(self):
+        return sm
+
+valtakunta = ValtakuntaApp()
 class ConfigWindow(Screen):
     player_name = ObjectProperty(None)
     role = ObjectProperty(None)
@@ -26,6 +55,7 @@ class ConfigWindow(Screen):
 
             else:
                 self._players.append((self.player_name.text, self.role.text))
+                valtakunta.get_running_app().players.append(Player(self.player_name.text, Role(self.role.text)))
                 self.reset()
 
     def start_game(self):
@@ -36,6 +66,7 @@ class ConfigWindow(Screen):
             pop.open()
         else:
             self.reset()
+            print(valtakunta.get_running_app().players)
             sm.current = "config"
 
     def reset(self):
@@ -56,9 +87,6 @@ for screen in screens:
 
 sm.current = "config"
 
-class ValtakuntaApp(App):
-    def build(self):
-        return sm
 
 if __name__ == "__main__":
-    ValtakuntaApp().run()
+    valtakunta.run()

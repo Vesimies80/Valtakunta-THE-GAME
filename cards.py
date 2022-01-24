@@ -74,7 +74,6 @@ class PlayingCard(Button):
     card: Cards
     def __init__(self, img_name, *args, width=200, on_press=None, **kwargs):
         self.card = Cards(img_name)
-        # super().__init__(*args, width=width, height=width*1.452, padding=(20, 20), on_press=on_press, **kwargs)
         super().__init__(*args, background_normal=os.path.join("cards", img_name), width=width, height=width*1.452, padding=(20, 20), on_press=on_press, **kwargs)
 
 
