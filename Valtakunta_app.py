@@ -5,6 +5,8 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.floatlayout import FloatLayout
 
 roles = ["kansalainen", "kurtesaani", "orja", "aatelinen", "hallitsija"]
 
@@ -17,14 +19,24 @@ class ConfigWindow(Screen):
     def submitbtn(self):
         if self.player_name.text != "" and self.role.text != "":
             if self.role.text.lower() not in roles:
-                invalidRole()
+                content=Button(text="The inputted role is invalid try: \nkansalainen, kurtesaani, orja, aatelinen, hallitsija")
+                pop = Popup(title='Invalid Role',content=content, auto_dismiss=False)
+                content.bind(on_press=pop.dismiss)
+                pop.open()
+
             else:
-                _players.append((self.player_name.text, self.role.text))
+                self._players.append((self.player_name.text, self.role.text))
                 self.reset()
 
-    def start_game(login):
-        self.reset()
-        sm.current = "config"
+    def start_game(self):
+        if len(self._players) == 0:
+            content=Button(text="No players inputted")
+            pop = Popup(title='No players',content=content, auto_dismiss=False)
+            content.bind(on_press=pop.dismiss)
+            pop.open()
+        else:
+            self.reset()
+            sm.current = "config"
 
     def reset(self):
         self.player_name.text = ""
@@ -35,10 +47,6 @@ class MainWindow(Screen):
 
 class WindowManager(ScreenManager):
     pass
-
-def invalidRole():
-    pop = Popup(title="Invalid Role", content=Label(text='The inputted role is invalid try: kansalainen, kurtesaani, orja, aatelinen, hallitsija'), size_hint=(1,1))
-    pop.open()
 
 kv = Builder.load_file("valtakunta.kv")
 sm = WindowManager()
