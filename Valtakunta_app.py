@@ -25,8 +25,8 @@ class Role(str, enum.Enum):
 
 @dataclass
 class Player:
-    role: Role
     name: str
+    role: Role
 
 
 class ValtakuntaApp(App):
