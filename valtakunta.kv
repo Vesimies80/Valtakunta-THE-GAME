@@ -6,31 +6,33 @@
 
     FloatLayout:
 
-        Label:
+        MDLabel:
             text: "Player name: "
             font_size: (root.width**2 + root.height**2) / 13**4
             pos_hint: {"x":0.1, "top":0.9}
             size_hint: 0.35, 0.15
         
-        TextInput:
+        MDTextField:
             id: player_name
+            hint_text: "Player name"
             font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
             pos_hint: {"x":0.45, "top":0.9}
             size_hint: 0.4, 0.15
         
-        Label:
+        MDLabel:
             text: "Player role: "
             font_size: (root.width**2 + root.height**2) / 13**4
             pos_hint: {"x":0.1, "top":0.7}
             size_hint: 0.35, 0.15
         
-        TextInput:
+        MDDropDownItem:
             id: role
+            text: "Player role"
             font_size: (root.width**2 + root.height**2) / 13**4
-            multiline: False
             pos_hint: {"x":0.45, "top":0.7}
             size_hint: 0.4, 0.15
+            on_release: root.manager.get_screen("config").menu.open()
 
         Button:
             pos_hint: {"x":0.2, "y":0.05}
