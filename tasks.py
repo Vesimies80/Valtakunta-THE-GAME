@@ -241,7 +241,3 @@ def get_action(card: Cards, role: Roles):
     number = card.rsplit("_", 1)[0].replace("_of", "")
     return actions[number][role]
 
-
-for card in Cards:
-    if card is not Cards.FACE_DOWN:
-        print(get_action(card, Roles.HALLITSIJA))
