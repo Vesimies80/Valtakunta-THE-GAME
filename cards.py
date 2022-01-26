@@ -65,7 +65,7 @@ class Cards(str, enum.Enum):
     HEART_13 = "king_of_hearts.png"
     SPADE_13 = "king_of_spades.png"
 
-    BLACK_JOKER = "black_joker.png"
+    #BLACK_JOKER = "black_joker.png"
 
     FACE_DOWN = "facedown.png"
 

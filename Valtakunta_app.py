@@ -1,6 +1,7 @@
 import kivy
 from kivymd.app import MDApp
 from kivy.metrics import dp
+from kivymd.uix.label import MDLabel
 
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -109,10 +110,12 @@ class ConfigWindow(Screen):
     def reset(self):
         self.player_name.text = ""
         self.ids.role.text = "Player role"
+
 class MainWindow(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.card = None
+        self.infolbl = None
         self.card_picker = CardPicker()
         self.card_picker_iter = iter(self.card_picker)
         self.replace_card(Cards.FACE_DOWN)
@@ -127,12 +130,18 @@ class MainWindow(Screen):
         if self.card:
             self.ids.floatlayout.remove_widget(self.card)
         # self.card = PlayingCard(card, pos_hint={"x": 0.1, "top": 0.4})
-        self.card = PlayingCard(card, on_press=self.new_card, pos_hint={"x": 0.1, "top": 0.4}, size_hint=(1/5, 1.452/5))
+        self.card = PlayingCard(card, on_press=self.new_card, pos_hint={"x": 0.1}, size_hint=(2/5, 1.452*2/5))
         # self.card = Button(text="foo", pos_hint={"x":0.4, "top":0.9})
         self.ids.floatlayout.add_widget(self.card)
     
     def on_enter(self):
         self.ids.foo.text = valtakunta.get_running_app().players[0].name
+    
+    def infolbl(self,text):
+        if self.infolbl:
+            self.ids.floatlayout.remove_widget(self.infolbl)
+        self.infolbl = MDLabel(text=text, pos_hint={"x":0.9},size_hint=(2/5,1.452*2/5))
+        self.ids.floatlayout.add_widget(self.infolbl)
 
 class WindowManager(ScreenManager):
     pass
