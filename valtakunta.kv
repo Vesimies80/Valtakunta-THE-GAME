@@ -50,3 +50,16 @@
             on_release:
                 root.start_game()
 
+
+<MainWindow>:
+    name: "cardscreen"
+
+    FloatLayout:
+        id: floatlayout
+
+        MDLabel:
+            id: foo
+            text: "Player name: "
+            font_size: (root.width**2 + root.height**2) / 13**4
+            pos_hint: {"x":0.1, "top":0.9}
+            size_hint: 0.35, 0.15

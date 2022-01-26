@@ -12,6 +12,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.list import OneLineIconListItem
 from kivy.properties import StringProperty
+from cards import CardPicker, PlayingCard, Cards
 
 import enum
 from typing import List
@@ -103,20 +104,42 @@ class ConfigWindow(Screen):
         else:
             self.reset()
             print(valtakunta.get_running_app().players)
-            sm.current = "config"
+            sm.current = "MainWindow"
 
     def reset(self):
         self.player_name.text = ""
         self.ids.role.text = "Player role"
 class MainWindow(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.card = None
+        self.card_picker = CardPicker()
+        self.card_picker_iter = iter(self.card_picker)
+        self.replace_card(Cards.FACE_DOWN)
+        
+
+    def new_card(self, card):
+        new_card = next(self.card_picker_iter)
+        print(new_card)
+        self.replace_card(new_card)
+
+    def replace_card(self, card: Cards):
+        if self.card:
+            self.ids.floatlayout.remove_widget(self.card)
+        # self.card = PlayingCard(card, pos_hint={"x": 0.1, "top": 0.4})
+        self.card = PlayingCard(card, on_press=self.new_card, pos_hint={"x": 0.1, "top": 0.4}, size_hint=(1/5, 1.452/5))
+        # self.card = Button(text="foo", pos_hint={"x":0.4, "top":0.9})
+        self.ids.floatlayout.add_widget(self.card)
+    
+    def on_enter(self):
+        self.ids.foo.text = valtakunta.get_running_app().players[0].name
 
 class WindowManager(ScreenManager):
     pass
 
 kv = Builder.load_file("valtakunta.kv")
 sm = WindowManager()
-screens = [ConfigWindow(name="config")]
+screens = [ConfigWindow(name="config"), MainWindow(name="MainWindow")]
 for screen in screens:
     sm.add_widget(screen)
 
