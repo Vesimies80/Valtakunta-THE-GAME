@@ -75,7 +75,7 @@ class ConfigWindow(Screen):
         self.menu = MDDropdownMenu(
             caller=self.ids.role,
             items=menu_items,
-            position="bottom",
+            position="center",
             width_mult=4,
         )
         self.menu.bind()

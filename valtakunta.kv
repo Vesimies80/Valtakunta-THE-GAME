@@ -4,51 +4,39 @@
     player_name: player_name
     role: role
 
-    FloatLayout:
-
+    BoxLayout:
+        orientation: "vertical"
+        padding: 0.1
         MDLabel:
-            text: "Player name: "
-            font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.1, "top":0.9}
-            size_hint: 0.35, 0.15
-        
+            text: "Add player"
+            pos_hint: {'center_x': 0.5}
+            halign: 'center'
         MDTextField:
             id: player_name
             hint_text: "Player name"
-            font_size: (root.width**2 + root.height**2) / 13**4
+            # font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
-            pos_hint: {"x":0.45, "top":0.9}
-            size_hint: 0.4, 0.15
-        
-        MDLabel:
-            text: "Player role: "
-            font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.1, "top":0.7}
-            size_hint: 0.35, 0.15
+            pos_hint: {'center_x': 0.5}
+            halign: 'center'
         
         MDDropDownItem:
             id: role
             text: "Player role"
             font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.45, "top":0.7}
-            size_hint: 0.4, 0.15
             on_release: root.manager.get_screen("config").menu.open()
+            pos_hint: {'center_x': 0.5}
 
         Button:
-            pos_hint: {"x":0.2, "y":0.05}
-            size_hint: 0.6, 0.12
             font_size: (root.width**2 + root.height**2) / 13**4
             text: "Add"
-            on_release:
-                root.submitbtn()
+            on_release: root.submitbtn()
+            pos_hint: {'center_x': 0.5}
         
         Button:
-            pos_hint: {"x":0.3, "y":0.25}
-            size_hint: 0.6,0.12
             font_size: (root.width**2 + root.height**2) / 13**4
             text: "Start"
-            on_release:
-                root.start_game()
+            on_release: root.start_game()
+            pos_hint: {'center_x': 0.5}
 
 
 <MainWindow>:
