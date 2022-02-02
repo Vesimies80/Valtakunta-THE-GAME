@@ -13,12 +13,21 @@ from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.list import OneLineIconListItem
 from kivy.properties import StringProperty
+import sys
+from kivy.resources import resource_add_path, resource_find
+
+
 from cards import CardPicker, PlayingCard, Cards
 
 import enum
 from typing import List
 
 from dataclasses import dataclass
+
+
+if __name__ == "__main__":
+    if hasattr(sys, '_MEIPASS'):
+        resource_add_path(os.path.join(sys._MEIPASS))
 
 roles = ["kansalainen", "kurtesaani", "orja", "aatelinen", "hallitsija"]
 
@@ -40,6 +49,7 @@ class Player:
     role: Roles
 
 
+
 class ValtakuntaApp(MDApp):
     players: List[Player]
     def __init__(self):
@@ -48,6 +58,7 @@ class ValtakuntaApp(MDApp):
 
     def build(self):
         return sm
+
 
 valtakunta = ValtakuntaApp()
 
@@ -143,17 +154,14 @@ class MainWindow(Screen):
         self.infolbl = MDLabel(text=text, pos_hint={"x":0.9},size_hint=(2/5,1.452*2/5))
         self.ids.floatlayout.add_widget(self.infolbl)
 
-class WindowManager(ScreenManager):
-    pass
 
 kv = Builder.load_file("valtakunta.kv")
-sm = WindowManager()
+sm = ScreenManager()
 screens = [ConfigWindow(name="config"), MainWindow(name="MainWindow")]
 for screen in screens:
     sm.add_widget(screen)
 
 sm.current = "config"
-
 
 if __name__ == "__main__":
     valtakunta.run()
